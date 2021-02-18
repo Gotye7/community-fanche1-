@@ -15,3 +15,4 @@
 [Git](https://git-scm.com/download)
 [Visual Paradigm](https://www.visual-paradigm.com)
 [FlyWay]()
+[LOMBOK](https://projectlombok.org/setup/maven)

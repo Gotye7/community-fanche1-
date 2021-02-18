@@ -5,9 +5,12 @@ import com.first.effort.community.dto.AccessTokenDTO;
 import com.first.effort.community.dto.GithubUser;
 import okhttp3.*;
 import org.apache.tomcat.util.http.parser.Authorization;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URI;
 
 import static okhttp3.RequestBody.*;
 
@@ -26,7 +29,7 @@ public class GithubProvider {
             String string = response.body().string();
             String token = string.split("&")[0].split("=")[1];
             System.out.println(string);
-            return string;
+            return token;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,13 +39,12 @@ public class GithubProvider {
     public GithubUser getUser(String accessToken){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://api.github.com/user?access_token="+accessToken)
-                .build();
-               /* .url("https://api.github.com/user")
-                .header("Authorization","token"+accessToken)
+//                .url("https://api.github.com/user?access_token="+accessToken)
+//                .build();
+                .url("https://api.github.com/user?access_token=" + accessToken)
+                .header("Authorization","token "+accessToken)
                 .build();
 
-               */
         try{
             Response response = client.newCall(request).execute();
             String string = response.body().string();
@@ -52,4 +54,5 @@ public class GithubProvider {
         }
         return null;
     }
+
 }
