@@ -1,16 +1,15 @@
-package com.first.effort.community;
+package com.first.effort.community.controller;
 
 import com.first.effort.community.mapper.UserMapper;
 import com.first.effort.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 public class IndexController {
@@ -18,18 +17,25 @@ public class IndexController {
     private UserMapper userMapper;
     @GetMapping("/")
     public String index(HttpServletRequest request){
+        //String header=request.getHeader("cookie");
+
         Cookie[] cookies = request.getCookies();
         for(Cookie cookie:cookies){
-            if(cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                User user = userMapper.findByToken(token);
-                if (user != null){
-                    request.getSession().setAttribute("user",user);
+                if (cookie.getName().equals("token")) {
+                    String token = cookie.getValue();
+                    User user = userMapper.findByToken(token);
+                    if (user != null) {
+                        request.getSession().setAttribute("user", user);
+                    }
+                    break;
                 }
-                break;
-            }
         }
 
-        return "index";
+        return"index";
     }
+//    @GetMapping("/")
+//    public String index(){
+//        return "index";
+//    }
+
 }
